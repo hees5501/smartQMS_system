@@ -1,103 +1,201 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { useState } from 'react'
+import NavigationMenu from './components/NavigationMenu'
+import ManualListArea from './components/ManualListArea'
+import ManualBasicInfoArea from './components/ManualBasicInfoArea'
+import ManualDetailContentArea from './components/ManualDetailContentArea'
+import ProcessListArea from './components/ProcessListArea'
+import ProcessBasicInfoArea from './components/ProcessBasicInfoArea'
+import ProcessDetailContentArea from './components/ProcessDetailContentArea'
+import ProcedureListArea from './components/ProcedureListArea'
+import ProcedureBasicInfoArea from './components/ProcedureBasicInfoArea'
+import ProcedureDetailContentArea from './components/ProcedureDetailContentArea'
+import GuideListArea from './components/GuideListArea'
+import GuideBasicInfoArea from './components/GuideBasicInfoArea'
+import GuideDetailContentArea from './components/GuideDetailContentArea'
+import { ProcessData } from './types/ProcessData'
+import { ProcedureData } from './types/ProcedureData'
+import { GuideData } from './types/GuideData'
+
+// 매뉴얼 데이터 타입 정의
+export interface ManualData {
+  id: string
+  구분: string
+  문서번호: string
+  표준명: string
+  영문표준명: string
+  프로세스오너: string
+  Rev: number
+  제정일자: string
+  개정일자: string
+  폐기일자?: string
+}
+
+// 문서 유형 정의
+export type DocumentType = 'manual' | 'guide' | 'process' | 'procedure'
+
+export default function SmartQMS() {
+  const [selectedDocumentType, setSelectedDocumentType] = useState<DocumentType>('manual')
+  const [selectedManual, setSelectedManual] = useState<ManualData | null>(null)
+  const [selectedGuide, setSelectedGuide] = useState<GuideData | null>(null)
+  const [selectedProcess, setSelectedProcess] = useState<ProcessData | null>(null)
+  const [selectedProcedure, setSelectedProcedure] = useState<ProcedureData | null>(null)
+
+  // 메뉴에서 문서 유형 선택 시 호출되는 함수
+  const handleDocumentTypeSelect = (type: DocumentType) => {
+    setSelectedDocumentType(type)
+    setSelectedManual(null) // 문서 유형 변경 시 선택된 문서 초기화
+    setSelectedGuide(null)
+    setSelectedProcess(null)
+    setSelectedProcedure(null)
+  }
+
+  // 목록에서 매뉴얼 선택 시 호출되는 함수
+  const handleManualSelect = (manual: ManualData) => {
+    setSelectedManual(manual)
+    setSelectedGuide(null)
+    setSelectedProcess(null)
+    setSelectedProcedure(null)
+  }
+
+  // 목록에서 지침서 선택 시 호출되는 함수
+  const handleGuideSelect = (guide: GuideData) => {
+    setSelectedGuide(guide)
+    setSelectedManual(null)
+    setSelectedProcess(null)
+    setSelectedProcedure(null)
+  }
+
+  // 목록에서 프로세스 선택 시 호출되는 함수
+  const handleProcessSelect = (process: ProcessData) => {
+    setSelectedProcess(process)
+    setSelectedManual(null)
+    setSelectedGuide(null)
+    setSelectedProcedure(null)
+  }
+
+  // 목록에서 절차서 선택 시 호출되는 함수
+  const handleProcedureSelect = (procedure: ProcedureData) => {
+    setSelectedProcedure(procedure)
+    setSelectedManual(null)
+    setSelectedGuide(null)
+    setSelectedProcess(null)
+  }
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div style={{ minHeight: '100vh', backgroundColor: '#f9fafb' }}>
+      {/* 헤더 */}
+      <header style={{ backgroundColor: 'white', boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)', borderBottom: '1px solid #e5e7eb' }}>
+        <div style={{ padding: '1rem 1.5rem' }}>
+          <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#111827' }}>Smart QMS</h1>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+      </header>
+
+      {/* 4단 분할 구조 */}
+      <div style={{ display: 'flex', height: 'calc(100vh - 73px)' }}>
+        {/* 좌측: 메뉴 영역 (Menu Area) */}
+        <div style={{ width: '250px', minWidth: '250px', borderRight: '1px solid #e5e7eb' }}>
+          <NavigationMenu 
+            selectedType={selectedDocumentType}
+            onTypeSelect={handleDocumentTypeSelect}
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        </div>
+
+        {/* 우측: 3단 영역 */}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          {/* 상단: 목록 영역 (List Area) */}
+          <div style={{ flex: 1, minHeight: 0 }}>
+            {selectedDocumentType === 'manual' ? (
+              <ManualListArea 
+                onManualSelect={handleManualSelect}
+                selectedManual={selectedManual}
+                documentType={selectedDocumentType}
+              />
+            ) : selectedDocumentType === 'guide' ? (
+              <GuideListArea 
+                onGuideSelect={handleGuideSelect}
+                selectedGuide={selectedGuide}
+                documentType={selectedDocumentType}
+              />
+            ) : selectedDocumentType === 'process' ? (
+              <ProcessListArea 
+                onProcessSelect={handleProcessSelect}
+                selectedProcess={selectedProcess}
+                documentType={selectedDocumentType}
+              />
+            ) : selectedDocumentType === 'procedure' ? (
+              <ProcedureListArea 
+                onProcedureSelect={handleProcedureSelect}
+                selectedProcedure={selectedProcedure}
+                documentType={selectedDocumentType}
+              />
+            ) : (
+              <div style={{ backgroundColor: 'white', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <p style={{ color: '#6b7280' }}>문서 화면을 선택하세요.</p>
+              </div>
+            )}
+          </div>
+
+          {/* 중단: 기본 정보 영역 (Basic Info Area) */}
+          <div style={{ flex: 1, minHeight: 0 }}>
+            {selectedDocumentType === 'manual' ? (
+              <ManualBasicInfoArea 
+                selectedManual={selectedManual}
+                documentType={selectedDocumentType}
+              />
+            ) : selectedDocumentType === 'guide' ? (
+              <GuideBasicInfoArea 
+                selectedGuide={selectedGuide}
+                documentType={selectedDocumentType}
+              />
+            ) : selectedDocumentType === 'process' ? (
+              <ProcessBasicInfoArea 
+                selectedProcess={selectedProcess}
+                documentType={selectedDocumentType}
+              />
+            ) : selectedDocumentType === 'procedure' ? (
+              <ProcedureBasicInfoArea 
+                selectedProcedure={selectedProcedure}
+                documentType={selectedDocumentType}
+              />
+            ) : (
+              <div style={{ backgroundColor: 'white', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <p style={{ color: '#6b7280' }}>문서 화면을 선택하세요.</p>
+              </div>
+            )}
+          </div>
+
+          {/* 하단: 상세 내용 영역 (Detailed Content Area) */}
+          <div style={{ flex: 1, minHeight: 0 }}>
+            {selectedDocumentType === 'manual' ? (
+              <ManualDetailContentArea 
+                selectedManual={selectedManual}
+                documentType={selectedDocumentType}
+              />
+            ) : selectedDocumentType === 'guide' ? (
+              <GuideDetailContentArea 
+                selectedGuide={selectedGuide}
+                documentType={selectedDocumentType}
+              />
+            ) : selectedDocumentType === 'process' ? (
+              <ProcessDetailContentArea 
+                selectedProcess={selectedProcess}
+                documentType={selectedDocumentType}
+              />
+            ) : selectedDocumentType === 'procedure' ? (
+              <ProcedureDetailContentArea 
+                selectedProcedure={selectedProcedure}
+                documentType={selectedDocumentType}
+              />
+            ) : (
+              <div style={{ backgroundColor: 'white', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <p style={{ color: '#6b7280' }}>문서 화면을 선택하세요.</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
-  );
+  )
 }
