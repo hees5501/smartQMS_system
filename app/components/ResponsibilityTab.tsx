@@ -3,7 +3,11 @@
 import { useState } from 'react'
 import { ResponsibilityData } from '../types/ProcedureData'
 
-export default function ResponsibilityTab() {
+interface ResponsibilityTabProps {
+  isEditing?: boolean
+}
+
+export default function ResponsibilityTab({ isEditing = false }: ResponsibilityTabProps) {
   const [responsibilityData, setResponsibilityData] = useState<ResponsibilityData[]>([
     {
       id: '1',
@@ -49,7 +53,7 @@ export default function ResponsibilityTab() {
     <div style={{ padding: '1.5rem' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
         <h3 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#111827' }}>책임과 권한</h3>
-        <button onClick={handleAddResponsibility} className="btn-primary">
+        <button onClick={handleAddResponsibility} disabled={!isEditing} className="btn-primary">
           + 역할 추가
         </button>
       </div>
@@ -63,6 +67,7 @@ export default function ResponsibilityTab() {
               type="text"
               value={newResponsibility.역할}
               onChange={(e) => setNewResponsibility(prev => ({ ...prev, 역할: e.target.value }))}
+              disabled={!isEditing}
               className="input-field"
               style={{ fontSize: '0.875rem' }}
               placeholder="역할명"
@@ -103,7 +108,7 @@ export default function ResponsibilityTab() {
           </div>
         </div>
         <div style={{ marginTop: '0.5rem', textAlign: 'right' }}>
-          <button onClick={handleAddResponsibility} className="btn-primary" style={{ fontSize: '0.875rem' }}>
+          <button onClick={handleAddResponsibility} disabled={!isEditing} className="btn-primary" style={{ fontSize: '0.875rem' }}>
             추가
           </button>
         </div>
@@ -127,6 +132,7 @@ export default function ResponsibilityTab() {
                 <td className="table-cell">
                   <button
                     onClick={() => handleDeleteResponsibility(item.id)}
+                    disabled={!isEditing}
                     style={{ color: '#ef4444', fontSize: '0.875rem' }}
                   >
                     삭제

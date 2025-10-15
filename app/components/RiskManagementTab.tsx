@@ -3,7 +3,11 @@
 import { useState } from 'react'
 import { RiskData } from '../types/ProcessData'
 
-export default function RiskManagementTab() {
+interface RiskManagementTabProps {
+  isEditing?: boolean
+}
+
+export default function RiskManagementTab({ isEditing = false }: RiskManagementTabProps) {
   const [riskData, setRiskData] = useState<RiskData[]>([
     {
       id: '1',
@@ -75,7 +79,7 @@ export default function RiskManagementTab() {
     <div style={{ padding: '1.5rem' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
         <h3 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#111827' }}>RISK 관리</h3>
-        <button onClick={handleAddRisk} className="btn-primary">
+        <button onClick={handleAddRisk} disabled={!isEditing} className="btn-primary">
           + 리스크 추가
         </button>
       </div>
@@ -136,7 +140,7 @@ export default function RiskManagementTab() {
             />
           </div>
           <div>
-            <button onClick={handleAddRisk} className="btn-primary" style={{ fontSize: '0.875rem' }}>
+            <button onClick={handleAddRisk} disabled={!isEditing} className="btn-primary" style={{ fontSize: '0.875rem' }}>
               추가
             </button>
           </div>

@@ -338,8 +338,9 @@ export default function GuideBasicInfoArea({ selectedGuide, documentType = 'guid
               type="text"
               value={formData.프로세스관련번호}
               onChange={(e) => handleInputChange('프로세스관련번호', e.target.value)}
-              disabled={!isEditing}
+              disabled={true}
               className="input-field"
+              style={{ backgroundColor: '#f3f4f6' }}
             />
           </div>
         </div>

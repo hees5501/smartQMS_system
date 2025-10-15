@@ -2,7 +2,11 @@
 
 import { useState } from 'react'
 
-export default function GuideWorkInstructionTab() {
+interface GuideWorkInstructionTabProps {
+  isEditing?: boolean
+}
+
+export default function GuideWorkInstructionTab({ isEditing = false }: GuideWorkInstructionTabProps) {
   const [content, setContent] = useState(`
     <h2>업무지침</h2>
     <p>이 지침서는 특정 업무를 수행하는 가장 상세하고 구체적인 방법을 기술합니다.</p>
@@ -209,6 +213,7 @@ export default function GuideWorkInstructionTab() {
           <textarea
             value={content}
             onChange={handleContentChange}
+            disabled={!isEditing}
             style={{
               width: '100%',
               minHeight: '400px',

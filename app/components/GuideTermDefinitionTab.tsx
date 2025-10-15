@@ -3,7 +3,11 @@
 import { useState } from 'react'
 import { GuideTermData } from '../types/GuideData'
 
-export default function GuideTermDefinitionTab() {
+interface GuideTermDefinitionTabProps {
+  isEditing?: boolean
+}
+
+export default function GuideTermDefinitionTab({ isEditing = false }: GuideTermDefinitionTabProps) {
   const [termData, setTermData] = useState<GuideTermData[]>([
     {
       id: '1',
@@ -66,6 +70,7 @@ export default function GuideTermDefinitionTab() {
               type="text"
               value={newTerm.용어}
               onChange={(e) => setNewTerm(prev => ({ ...prev, 용어: e.target.value }))}
+              disabled={!isEditing}
               className="input-field"
               style={{ fontSize: '0.875rem' }}
               placeholder="용어명"
@@ -77,6 +82,7 @@ export default function GuideTermDefinitionTab() {
               type="text"
               value={newTerm.정의}
               onChange={(e) => setNewTerm(prev => ({ ...prev, 정의: e.target.value }))}
+              disabled={!isEditing}
               className="input-field"
               style={{ fontSize: '0.875rem' }}
               placeholder="용어 정의"
@@ -88,6 +94,7 @@ export default function GuideTermDefinitionTab() {
               type="text"
               value={newTerm.비고}
               onChange={(e) => setNewTerm(prev => ({ ...prev, 비고: e.target.value }))}
+              disabled={!isEditing}
               className="input-field"
               style={{ fontSize: '0.875rem' }}
               placeholder="비고"
@@ -95,7 +102,7 @@ export default function GuideTermDefinitionTab() {
           </div>
         </div>
         <div style={{ marginTop: '0.5rem', textAlign: 'right' }}>
-          <button onClick={handleAddTerm} className="btn-primary" style={{ fontSize: '0.875rem' }}>
+          <button onClick={handleAddTerm} disabled={!isEditing} className="btn-primary" style={{ fontSize: '0.875rem' }}>
             추가
           </button>
         </div>
@@ -118,6 +125,7 @@ export default function GuideTermDefinitionTab() {
                 <td className="table-cell">
                   <button
                     onClick={() => handleDeleteTerm(item.id)}
+                    disabled={!isEditing}
                     style={{ color: '#ef4444', fontSize: '0.875rem' }}
                   >
                     삭제
@@ -128,6 +136,7 @@ export default function GuideTermDefinitionTab() {
                     type="text"
                     value={item.용어}
                     onChange={(e) => handleInputChange(item.id, '용어', e.target.value)}
+                    disabled={!isEditing}
                     className="input-field"
                     style={{ fontSize: '0.875rem', border: 'none', backgroundColor: 'transparent' }}
                   />
@@ -137,6 +146,7 @@ export default function GuideTermDefinitionTab() {
                     type="text"
                     value={item.정의}
                     onChange={(e) => handleInputChange(item.id, '정의', e.target.value)}
+                    disabled={!isEditing}
                     className="input-field"
                     style={{ fontSize: '0.875rem', border: 'none', backgroundColor: 'transparent' }}
                   />
@@ -146,6 +156,7 @@ export default function GuideTermDefinitionTab() {
                     type="text"
                     value={item.비고}
                     onChange={(e) => handleInputChange(item.id, '비고', e.target.value)}
+                    disabled={!isEditing}
                     className="input-field"
                     style={{ fontSize: '0.875rem', border: 'none', backgroundColor: 'transparent' }}
                   />

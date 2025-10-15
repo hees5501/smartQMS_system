@@ -209,7 +209,7 @@ export default function ProcessBasicInfoArea({ selectedProcess, documentType = '
         </div>
 
         {/* 2행 */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '1rem', marginBottom: '1rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '1rem', marginBottom: '1rem' }}>
           <div>
             <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#374151', marginBottom: '0.25rem' }}>
               문서번호 <span style={{ color: '#ef4444' }}>*</span>
@@ -231,8 +231,9 @@ export default function ProcessBasicInfoArea({ selectedProcess, documentType = '
               type="number"
               value={formData.Rev}
               onChange={(e) => handleInputChange('Rev', parseInt(e.target.value) || 1)}
-              disabled={!isEditing}
+              disabled={true}
               className="input-field"
+              style={{ backgroundColor: '#f3f4f6' }}
             />
           </div>
           <div>
@@ -267,6 +268,19 @@ export default function ProcessBasicInfoArea({ selectedProcess, documentType = '
               type="date"
               value={formData.제정일자}
               onChange={(e) => handleInputChange('제정일자', e.target.value)}
+              disabled={!isEditing}
+              className="input-field"
+              required
+            />
+          </div>
+          <div>
+            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#374151', marginBottom: '0.25rem' }}>
+              개정일자 <span style={{ color: '#ef4444' }}>*</span>
+            </label>
+            <input
+              type="date"
+              value={formData.개정일자}
+              onChange={(e) => handleInputChange('개정일자', e.target.value)}
               disabled={!isEditing}
               className="input-field"
               required
@@ -338,8 +352,9 @@ export default function ProcessBasicInfoArea({ selectedProcess, documentType = '
               type="text"
               value={formData.프로세스관련번호}
               onChange={(e) => handleInputChange('프로세스관련번호', e.target.value)}
-              disabled={!isEditing}
+              disabled={true}
               className="input-field"
+              style={{ backgroundColor: '#f3f4f6' }}
             />
           </div>
         </div>

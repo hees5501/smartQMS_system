@@ -3,7 +3,11 @@
 import { useState } from 'react'
 import { RACIEData } from '../types/ProcessData'
 
-export default function RACIETab() {
+interface RACIETabProps {
+  isEditing?: boolean
+}
+
+export default function RACIETab({ isEditing = false }: RACIETabProps) {
   const [racieData, setRacieData] = useState<RACIEData[]>([
     {
       id: '1',
@@ -58,7 +62,7 @@ export default function RACIETab() {
     <div style={{ padding: '1.5rem' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
         <h3 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#111827' }}>RACIE 매트릭스</h3>
-        <button onClick={handleAddActivity} className="btn-primary">
+        <button onClick={handleAddActivity} disabled={!isEditing} className="btn-primary">
           + 활동 추가
         </button>
       </div>
@@ -144,7 +148,7 @@ export default function RACIETab() {
             />
           </div>
           <div>
-            <button onClick={handleAddActivity} className="btn-primary" style={{ fontSize: '0.875rem' }}>
+            <button onClick={handleAddActivity} disabled={!isEditing} className="btn-primary" style={{ fontSize: '0.875rem' }}>
               추가
             </button>
           </div>

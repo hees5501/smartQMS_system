@@ -17,20 +17,7 @@ import GuideDetailContentArea from './components/GuideDetailContentArea'
 import { ProcessData } from './types/ProcessData'
 import { ProcedureData } from './types/ProcedureData'
 import { GuideData } from './types/GuideData'
-
-// 매뉴얼 데이터 타입 정의
-export interface ManualData {
-  id: string
-  구분: string
-  문서번호: string
-  표준명: string
-  영문표준명: string
-  프로세스오너: string
-  Rev: number
-  제정일자: string
-  개정일자: string
-  폐기일자?: string
-}
+import { ManualData } from './types/ManualData'
 
 // 문서 유형 정의
 export type DocumentType = 'manual' | 'guide' | 'process' | 'procedure'
@@ -142,7 +129,6 @@ export default function SmartQMS() {
             {selectedDocumentType === 'manual' ? (
               <ManualBasicInfoArea 
                 selectedManual={selectedManual}
-                documentType={selectedDocumentType}
               />
             ) : selectedDocumentType === 'guide' ? (
               <GuideBasicInfoArea 
@@ -171,7 +157,6 @@ export default function SmartQMS() {
             {selectedDocumentType === 'manual' ? (
               <ManualDetailContentArea 
                 selectedManual={selectedManual}
-                documentType={selectedDocumentType}
               />
             ) : selectedDocumentType === 'guide' ? (
               <GuideDetailContentArea 

@@ -239,8 +239,9 @@ export default function ProcedureBasicInfoArea({ selectedProcedure, documentType
               type="number"
               value={formData.Rev}
               onChange={(e) => handleInputChange('Rev', parseInt(e.target.value) || 1)}
-              disabled={!isEditing}
+              disabled={true}
               className="input-field"
+              style={{ backgroundColor: '#f3f4f6' }}
             />
           </div>
           <div>

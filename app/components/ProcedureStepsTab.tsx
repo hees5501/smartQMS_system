@@ -3,7 +3,11 @@
 import { useState } from 'react'
 import { ProcedureStepData } from '../types/ProcedureData'
 
-export default function ProcedureStepsTab() {
+interface ProcedureStepsTabProps {
+  isEditing?: boolean
+}
+
+export default function ProcedureStepsTab({ isEditing = false }: ProcedureStepsTabProps) {
   const [stepData, setStepData] = useState<ProcedureStepData[]>([
     {
       id: '1',
@@ -102,7 +106,7 @@ export default function ProcedureStepsTab() {
     <div style={{ padding: '1.5rem' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
         <h3 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#111827' }}>절차 단계</h3>
-        <button onClick={handleAddStep} className="btn-primary">
+        <button onClick={handleAddStep} disabled={!isEditing} className="btn-primary">
           + 단계 추가
         </button>
       </div>
@@ -189,7 +193,7 @@ export default function ProcedureStepsTab() {
           </div>
         </div>
         <div style={{ marginTop: '0.5rem', textAlign: 'right' }}>
-          <button onClick={handleAddStep} className="btn-primary" style={{ fontSize: '0.875rem' }}>
+          <button onClick={handleAddStep} disabled={!isEditing} className="btn-primary" style={{ fontSize: '0.875rem' }}>
             추가
           </button>
         </div>

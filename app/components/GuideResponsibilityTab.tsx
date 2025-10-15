@@ -3,7 +3,11 @@
 import { useState } from 'react'
 import { GuideResponsibilityData } from '../types/GuideData'
 
-export default function GuideResponsibilityTab() {
+interface GuideResponsibilityTabProps {
+  isEditing?: boolean
+}
+
+export default function GuideResponsibilityTab({ isEditing = false }: GuideResponsibilityTabProps) {
   const [responsibilityData, setResponsibilityData] = useState<GuideResponsibilityData[]>([
     {
       id: '1',
@@ -49,7 +53,7 @@ export default function GuideResponsibilityTab() {
     <div style={{ padding: '1.5rem' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
         <h3 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#111827' }}>책임과 권한</h3>
-        <button onClick={handleAddResponsibility} className="btn-primary">
+        <button onClick={handleAddResponsibility} disabled={!isEditing} className="btn-primary">
           + 역할 추가
         </button>
       </div>
